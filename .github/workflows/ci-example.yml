@@ -1,59 +1,13 @@
-name: "CI Example Workflow"
+name: Test Workflow
 
-# 🔹 When should this workflow run?
-on:
-  push:                     # Trigger when code is pushed
-    branches:
-      - main
-  pull_request:             # Trigger when PR is created
-    branches:
-      - main
-
-# 🔹 Define environment variables used in all jobs
-env:
-  APP_NAME: "DemoApp"
-  NODE_VERSION: "20"
+on: [push]
 
 jobs:
-  build:
-    name: "Build and Test"
+  hello-world:
     runs-on: ubuntu-latest
-
-    # 🔹 Define job-level environment variables
-    env:
-      BUILD_DIR: "src"
-
     steps:
-      - name: "Checkout Repository"
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: "Set up Node.js"
-        uses: actions/setup-node@v4
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-
-      - name: "Install Dependencies"
-        run: npm install
-
-      - name: "Run Tests"
-        run: npm test
-
-      - name: "Show Environment Variables"
-        run: |
-          echo "App Name: $APP_NAME"
-          echo "Node Version: $NODE_VERSION"
-          echo "Build Directory: $BUILD_DIR"
-
-  deploy:
-    name: "Deploy Application"
-    runs-on: ubuntu-latest
-    needs: build  # Run after build job finishes successfully
-
-    steps:
-      - name: "Checkout Repository"
-        uses: actions/checkout@v4
-
-      - name: "Print Deployment Message"
-        run: |
-          echo "Deploying $APP_NAME to production..."
-          echo "Deployed successfully!"
+      - name: Print Hello
+        run: echo "Hello from GitHub Actions 🎉"
