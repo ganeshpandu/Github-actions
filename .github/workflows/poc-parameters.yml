@@ -1,0 +1,33 @@
+name: POC - Build With Parameters
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: "Enter your name"
+        required: true
+        type: string
+      environment:
+        description: "Select environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
+      enable_feature:
+        description: "Enable feature flag?"
+        type: boolean
+        default: false
+
+jobs:
+  test-parameters:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print All Inputs
+        run: |
+          echo "Name: ${{ inputs.name }}"
+          echo "Environment: ${{ inputs.environment }}"
+          echo "Feature Flag: ${{ inputs.enable_feature }}"
+          echo "Current Branch: ${{ github.ref }}"
+          echo "Triggered By: ${{ github.actor }}"
